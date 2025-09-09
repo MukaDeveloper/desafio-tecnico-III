@@ -1,3 +1,5 @@
+import { ExamProfile } from '@application/exam/automapper/exam.profile';
+import { PatientProfile } from '@application/patient/automapper/patient.profile';
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { Module } from '@nestjs/common';
@@ -10,6 +12,8 @@ import { Module } from '@nestjs/common';
   ],
   providers: [
     // Profiles
+    PatientProfile,
+    ExamProfile,
   ],
   exports: [AutomapperModule],
 })

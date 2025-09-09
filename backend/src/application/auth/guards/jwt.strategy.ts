@@ -10,7 +10,7 @@ import { ContextAccess } from '@middleware/context/context.access';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly config: ConfigService,
-    private readonly patientService: PatientService
+    private readonly patientService: PatientService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -22,11 +22,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: any) {
     const responseMessage = await this.patientService.findByEmail(payload.email);
 
-    if (responseMessage.statusCode !== 200 || !responseMessage.data) 
+    if (responseMessage.statusCode !== 200 || !responseMessage.data)
       throw new UnauthorizedException('Usuario não encontrado.');
 
     const patientData = responseMessage.data;
-    if (!patientData || patientData.status !== PatientStatus.Active) 
+    if (!patientData || patientData.status !== PatientStatus.Active)
       throw new UnauthorizedException('Usuário inválido ou inativo');
 
     if (patientData.name !== payload.name || patientData.id !== payload.id)
@@ -35,8 +35,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const patient = {
       id: patientData.id,
       name: patientData.name,
-      type: "Patient",
-      email: patientData.email
+      type: 'Patient',
+      email: patientData.email,
     };
 
     ContextAccess.setPatient(patient);

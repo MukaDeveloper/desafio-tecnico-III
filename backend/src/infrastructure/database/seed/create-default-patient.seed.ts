@@ -11,7 +11,7 @@ export async function createDefaultPatient(dataSource: DataSource) {
     {
       id: '9d1e25b6-f352-76e9-5311-d63b35a6f351',
       name: 'Samuel Bertoni',
-      email: 'muka.bertoni@gmail.com',
+      email: 'adm@gmail.com',
       document: '00000000000',
       password: 'muka123',
       status: PatientStatus.Active,

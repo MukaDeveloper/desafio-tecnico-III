@@ -54,5 +54,5 @@ export class PatientDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  exam?: ExamDto[];
+  exams?: ExamDto[];
 }

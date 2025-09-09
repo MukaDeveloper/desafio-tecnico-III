@@ -1,3 +1,4 @@
+import { PatientDto } from '@application/patient/models/patient.dto';
 import { Patient } from '@domain/entities/patient.entity';
 import { DicomModality } from '@domain/enums/dicom-modality.enum';
 import { ApiProperty } from '@nestjs/swagger';
@@ -55,5 +56,5 @@ export class ExamDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  patient?: Patient;
+  patient?: PatientDto;
 }

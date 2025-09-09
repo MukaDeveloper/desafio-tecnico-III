@@ -13,7 +13,7 @@ import { AuthTokenDto } from '@application/auth/models/auth-token.dto';
 import { ResponseMessageDto } from '@domain/commons/models/response-message.dto';
 
 @Controller('auth')
-@ApiTags('auth')
+@ApiTags('Autenticação')
 @ApiBearerAuth('Bearer')
 @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
 @ApiBadRequestResponse({ description: 'Erro de validação.' })

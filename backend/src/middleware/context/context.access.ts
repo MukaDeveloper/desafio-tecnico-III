@@ -16,7 +16,7 @@ export class ContextAccess {
     const store = this.als.getStore();
     if (!store) {
       throw new Error(
-        'AppContext não definido. Use ContextStore.run(...) para inicializar.',
+        'AppContext não definido. Use ContextAccess.run(...) para inicializar.',
       );
     }
     return store;
