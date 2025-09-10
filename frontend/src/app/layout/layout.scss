@@ -1,0 +1,55 @@
+@use '@angular/material' as mat;
+
+.layout-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--mat-sys-surface) !important;
+
+  #drawer {
+    border-radius: 0 !important;
+    background: var(--mat-sys-background) !important;
+    color: var(--mat-sys-on-background) !important;
+
+    .mat-drawer-inner-container {
+      overflow: hidden !important;
+    }
+
+    #sidebar {
+      display: block;
+
+      &.expanded {
+        width: 235px;
+      }
+
+      &.collapsed {
+        width: 64px;
+      }
+    }
+  }
+
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    height: 100%;
+
+    .page-content {
+      padding: 1rem;
+      padding-top: 0 !important;
+      height: 100%;
+
+      overflow: auto;
+    }
+  }
+}
+
+@include mat.sidenav-overrides(
+  (
+    container-divider-color: var(--mat-sys-border),
+    container-width: 235px,
+  )
+);

@@ -1,0 +1,27 @@
+<main class="container">
+  <section class="wrapper">
+    <div class="wrapper-header">
+      <div class="header-title">
+        <h2>Login</h2>
+        <p>Use suas credenciais para acessar a plataforma e visualizar seus exames</p>
+      </div>
+    </div>
+    <div class="wrapper-content">
+      <form [formGroup]="form" class="form-container" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" type="text" placeholder="Digite seu e-mail" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="always">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Insira sua senha" required />
+        </mat-form-field>
+
+        <div class="form-footer">
+          <button mat-flat-button type="submit">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

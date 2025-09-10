@@ -1,0 +1,92 @@
+@use '@angular/material' as mat;
+@use './_typography' as *;
+@use 'sass:map';
+
+:root,
+:host {
+  --mat-sys-primary-rgb: 0, 92, 168;
+  --mat-sys-on-primary-rgb: 255, 255, 255;
+
+  --mat-sys-secondary-rgb: 0, 180, 229;
+  --mat-sys-on-secondary-rgb: 0, 31, 38;
+
+  --mat-sys-tertiary-rgb: 242, 88, 53;
+  --mat-sys-on-tertiary-rgb: 255, 255, 255;
+
+  --mat-sys-success: #2dd55b;
+  --mat-sys-success-rgb: 45, 213, 91;
+  --mat-sys-on-success: #000000;
+  --mat-sys-on-success-rgb: 0, 0, 0;
+
+  --mat-sys-border: #e4e4e7;
+  --mat-sys-medium-rgb: 200, 200, 200;
+
+  @include mat.theme-overrides(
+    (
+      primary: #005ca8,
+      on-primary: #ffffff,
+      primary-container: #d5e4ff,
+      on-primary-container: #001b3a,
+      inverse-primary: #9ccaff,
+      primary-fixed: #d5e4ff,
+      primary-fixed-dim: #a8c9ff,
+      on-primary-fixed: #001b3a,
+      on-primary-fixed-variant: #003f72,
+
+      secondary: #00b4e5,
+      on-secondary: #001f26,
+      secondary-container: #cff3ff,
+      on-secondary-container: #001f26,
+      secondary-fixed: #cff3ff,
+      secondary-fixed-dim: #75d9f2,
+      on-secondary-fixed: #001f26,
+      on-secondary-fixed-variant: #003543,
+
+      tertiary: #f25835,
+      on-tertiary: #ffffff,
+      tertiary-container: #ffdad2,
+      on-tertiary-container: #b22b0a,
+      tertiary-fixed: #ffdad2,
+      tertiary-fixed-dim: #ffb4a3,
+      on-tertiary-fixed: #3a0a02,
+      on-tertiary-fixed-variant: #723426,
+
+      background: #fefcff,
+      on-background: #221a15,
+
+      surface: #f8fafc,
+      surface-dim: #d5dbdc,
+      surface-bright: #f5fafb,
+      surface-container-lowest: #ffffff,
+      surface-container-low: #eff5f6,
+      surface-container: #e9eff0,
+      surface-container-high: #e3e9ea,
+      surface-container-highest: #dee3e5,
+      on-surface: #171d1e,
+
+      shadow: #000000,
+      scrim: #000000,
+      surface-tint: #8a5021,
+      inverse-surface: #2b3133,
+      inverse-on-surface: #f5f7fa,
+
+      outline: #6f797a,
+      outline-variant: #bfc8ca,
+      neutral: #797676,
+      neutral10: #1c1b1b,
+
+      error: #ba1a1a,
+      error-container: #ffdad6,
+      on-error: #ffffff,
+      on-error-container: #410002,
+
+      surface-variant: #dbe4e6,
+      on-surface-variant: #3f484a,
+      neutral-variant: #807473,
+      neutral-variant20: #372e2e,
+
+      inverse-secondary: #e0bfbc,
+      inverse-tertiary: #e4c18b,
+    )
+  );
+}

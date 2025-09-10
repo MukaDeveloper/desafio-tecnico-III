@@ -1,0 +1,22 @@
+@if (data.title) {
+<h1 mat-dialog-title>{{ data.title }}</h1>
+}
+<mat-dialog-content>
+  <p>{{ data.message }}</p>
+</mat-dialog-content>
+@if (data.actions && data.actions.length > 0) {
+<mat-dialog-actions class="actions" align="center">
+  @for (action of data.actions; track $index) {
+  <div class="division">
+    <button
+      mat-button
+      [color]="action.color || 'primary'"
+      (click)="close(action.value)"
+      cdkFocusInitial="true"
+    >
+      {{ action.label }}
+    </button>
+  </div>
+  }
+</mat-dialog-actions>
+}

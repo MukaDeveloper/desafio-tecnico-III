@@ -1,0 +1,42 @@
+<aside class="sidebar">
+  @if (expanded) {
+  <div class="logo-container">
+    <img src="assets/images/logo.png" alt="Logo Cannoli" />
+  </div>
+  }
+  <nav class="sidebar-nav">
+    @for (item of sidebarItems; track $index) {
+    <div class="sidebar-item">
+      <div class="item-header">
+        <h3>{{ item.label }}</h3>
+      </div>
+      <div class="item-content">
+        @for (child of item.children; track $index) {
+        <a
+          [routerLink]="child.route"
+          routerLinkActive="active"
+          #rla="routerLinkActive"
+          (click)="handleClick()"
+        >
+          <div class="item">
+            <mat-icon
+              [ngClass]="{ 'primary-color': rla.isActive }"
+              fontSet="material-icons-outlined"
+              class="primary-color"
+            >
+              {{ child.icon }}
+            </mat-icon>
+            @if (expanded) {
+            <span>{{ child.label }}</span>
+            }
+          </div>
+          @if (expanded && rla.isActive) {
+          <mat-icon class="chevron-icon"> chevron_right </mat-icon>
+          }
+        </a>
+        }
+      </div>
+    </div>
+    }
+  </nav>
+</aside>
