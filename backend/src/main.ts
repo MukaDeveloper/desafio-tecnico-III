@@ -39,7 +39,11 @@ async function bootstrap() {
     operationIdFactory: (controllerKey: string, methodKey: string) => `${controllerKey}_${methodKey}`,
   });
 
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
   const isProd = process.env.NODE_ENV === 'production';
 
