@@ -13,7 +13,7 @@ export class AuditSubscriber implements EntitySubscriberInterface {
   beforeInsert(event: InsertEvent<any>) {
     const entity = event.entity;
     if (!entity) return;
-    const patient = ContextAccess.PatientName;
+    const patient = ContextAccess.userName;
 
     entity.Id = entity.Id || uuid();
     entity.CreatedAt = entity.CreatedAt || getNowWithTimeZone();
@@ -25,7 +25,7 @@ export class AuditSubscriber implements EntitySubscriberInterface {
   beforeUpdate(event: UpdateEvent<any>) {
     const entity = event.entity;
     if (!entity) return;
-    const patient = ContextAccess.PatientName;
+    const patient = ContextAccess.userName;
 
     entity.Id = entity.Id || uuid();
     entity.CreatedAt = entity.CreatedAt || getNowWithTimeZone();

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { Sidebar } from './sidebar/sidebar';
@@ -7,7 +7,8 @@ import { Sidebar } from './sidebar/sidebar';
   selector: 'app-layout',
   imports: [RouterOutlet, MatSidenavModule, Sidebar],
   templateUrl: './layout.html',
-  styleUrl: './layout.scss'
+  styleUrl: './layout.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Layout {
   public isMobile = false;

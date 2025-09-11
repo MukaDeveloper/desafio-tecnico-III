@@ -1,0 +1,48 @@
+.wrapper-content {
+  display: flex;
+  height: 100vh;
+
+  .left-content {
+    flex: 3;
+    background: url('/assets/images/background.png') no-repeat center center;
+    background-size: cover;
+    transition: 0.3s;
+
+    @media (max-width: 900px) {
+      transition: 0.3s;
+    }
+  }
+
+  .right-content {
+    flex: 1;
+    display: flex;
+    margin: 0 auto;
+    max-width: 560px;
+    min-width: 420px;
+    padding: 2rem;
+    transition: 0.3s;
+    align-items: center;
+
+    @media (max-width: 900px) {
+      grid-area: 1 / 4 / 2 / 7;
+      transition: 0.3s;
+    }
+
+    &-wrapper {
+      text-align: center;
+
+      .form-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+    }
+  }
+}
+
+.logo-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}

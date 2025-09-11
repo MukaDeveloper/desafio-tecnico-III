@@ -46,6 +46,11 @@ export const layoutItems = [
         icon: 'group',
         route: ERoutes.PATIENTS,
       },
+      {
+        label: 'Exames',
+        icon: 'assignment',
+        route: ERoutes.EXAMS,
+      },
     ],
   },
 ];

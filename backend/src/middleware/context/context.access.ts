@@ -1,7 +1,7 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
 
 export type AppContext = {
-  patient: { id: string; name: string; type: string; email: string };
+  user: { id: string; name: string; type: string; email: string };
   url: string;
 };
 
@@ -22,25 +22,25 @@ export class ContextAccess {
     return store;
   }
 
-  static get Patient(): AppContext['patient'] {
-    return this.Ctx.patient;
+  static get user(): AppContext['user'] {
+    return this.Ctx.user;
   }
 
-  static get Url(): string {
+  static get url(): string {
     return this.Ctx.url;
   }
 
-  static get PatientName(): string {
-    return this.Patient.name;
+  static get userName(): string {
+    return this.user.name;
   }
 
-  static setPatient(patient: AppContext['patient']) {
+  static setUser(user: AppContext['user']) {
     const store = this.als.getStore();
     if (!store) {
       throw new Error(
         'AppContext não definido. Não é possível setar o usuário.',
       );
     }
-    store.patient = patient;
+    store.user = user;
   }
 }

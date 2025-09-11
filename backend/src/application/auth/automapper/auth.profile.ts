@@ -4,6 +4,7 @@ import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { JwtService } from '@nestjs/jwt';
 import { AuthTokenDto } from '../models/auth-token.dto';
 import { Patient } from '@domain/entities/patient.entity';
+import { UserSystem } from '@domain/entities/user-system.entity';
 
 @Injectable()
 export class AuthProfile extends AutomapperProfile {
@@ -18,7 +19,7 @@ export class AuthProfile extends AutomapperProfile {
     return (mapper) => {
       createMap(
         mapper,
-        Patient,
+        UserSystem,
         AuthTokenDto,
         forMember(
           (dest) => dest.patientId,

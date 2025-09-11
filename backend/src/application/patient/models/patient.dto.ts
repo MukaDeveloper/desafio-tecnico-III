@@ -1,8 +1,7 @@
 import { ExamDto } from '@application/exam/models/exam.dto';
-import { PatientStatus } from '@domain/enums/patient-status.enum';
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import { IsDate, IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class PatientDto {
   @ApiProperty({ description: 'ID do Usuário', required: false })
@@ -14,21 +13,6 @@ export class PatientDto {
   @IsString()
   @IsNotEmpty()
   name!: string;
-
-  @ApiProperty({ description: 'Email', required: true })
-  @IsString()
-  @IsNotEmpty()
-  email!: string;
-
-  @ApiProperty({ description: 'Senha', required: true })
-  @IsString()
-  @IsNotEmpty()
-  password!: string;
-
-  @ApiProperty({ description: 'Status', required: true })
-  @IsEnum(PatientStatus)
-  @Transform(({ value }) => value ?? PatientStatus.Active)
-  status!: PatientStatus;
 
   @ApiProperty({ description: 'Data de Criação', required: false })
   @Type(() => Date)

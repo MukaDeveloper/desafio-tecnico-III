@@ -23,6 +23,10 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/patients/patients').then((m) => m.Patients),
       },
       {
+        path: ERoutes.EXAMS,
+        loadComponent: () => import('./pages/exams/exams').then((m) => m.Exams),
+      },
+      {
         path: '**',
         loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFound),
       },

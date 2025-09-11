@@ -11,6 +11,7 @@
     border-radius: 0 !important;
     background: var(--mat-sys-background) !important;
     color: var(--mat-sys-on-background) !important;
+    overflow: hidden;
 
     .mat-drawer-inner-container {
       overflow: hidden !important;
@@ -46,10 +47,3 @@
     }
   }
 }
-
-@include mat.sidenav-overrides(
-  (
-    container-divider-color: var(--mat-sys-border),
-    container-width: 235px,
-  )
-);

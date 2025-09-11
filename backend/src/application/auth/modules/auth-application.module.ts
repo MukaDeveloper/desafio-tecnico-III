@@ -6,12 +6,12 @@ import { JwtStrategy } from '@application/auth/guards/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { AuthProfile } from '../automapper/auth.profile';
 import { AuthInfrastructureModule } from '@infrastructure/database/auth/modules/auth-infrastructure.module';
-import { PatientInfrastructureModule } from '@infrastructure/database/patient/modules/patient-infrastructure.module';
-import { PatientApplicationModule } from '@application/patient/modules/patient.module';
+import { UserSystemInfrastructureModule } from '@infrastructure/database/user-system/modules/user-system-infrastructure.module';
+import { UserSystemApplicationModule } from '@application/user-system/modules/user-system.module';
 
 @Module({
   imports: [
-    PatientApplicationModule,
+    UserSystemApplicationModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -22,7 +22,7 @@ import { PatientApplicationModule } from '@application/patient/modules/patient.m
       }),
     }),
     AuthInfrastructureModule,
-    PatientInfrastructureModule,
+    UserSystemInfrastructureModule,
   ],
   providers: [AuthService, JwtStrategy, AuthProfile],
   exports: [AuthService, PassportModule, JwtModule, AuthProfile],

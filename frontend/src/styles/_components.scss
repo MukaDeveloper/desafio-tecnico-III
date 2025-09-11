@@ -3,10 +3,17 @@
 :root {
   @include mat.button-overrides(
     (
-      filled-container-color: var(--mat-sys-primary),
-      filled-label-text-color: var(--mat-sys-on-primary),
-      filled-disabled-container-color: rgba(var(--mat-sys-primary-rgb), 0.4),
-      filled-disabled-label-text-color: rgba(var(--mat-sys-on-primary-rgb), 0.4),
+      // filled-container-color: var(--mat-sys-primary),
+      // filled-label-text-color: var(--mat-sys-on-primary),
+      // filled-disabled-container-color: rgba(var(--mat-sys-primary-rgb), 0.4),
+      // filled-disabled-label-text-color: rgba(var(--mat-sys-on-primary-rgb), 0.4),
+    )
+  );
+
+  @include mat.sidenav-overrides(
+    (
+      container-divider-color: var(--mat-sys-border),
+      container-width: 235px,
     )
   );
 
@@ -46,5 +53,42 @@
     .mdc-button {
       color: var(--mat-sys-on-#{$type}) !important;
     }
+  }
+}
+
+@mixin custom-button($type) {
+  .#{$type}-button {
+    @include mat.button-overrides(
+      (
+        filled-container-color: var(--mat-sys-#{$type}),
+        filled-label-text-color: var(--mat-sys-on-#{$type}),
+        filled-disabled-container-color: rgba(var(--mat-sys-on-surface-rgb), 0.12),
+        filled-disabled-label-text-color: rgba(var(--mat-sys-on-surface-rgb), 0.38),
+        filled-state-layer-color: var(--mat-sys-#{$type}),
+        filled-ripple-color: rgba(var(--mat-sys-on-#{$type}-rgb), 0.12),
+        outlined-label-text-color: var(--mat-sys-on-#{$type}),
+        outlined-outline-color: var(--mat-sys-#{$type}),
+        outlined-disabled-outline-color: rgba(var(--mat-sys-on-surface-rgb), 0.12),
+        outlined-disabled-label-text-color: rgba(var(--mat-sys-on-surface-rgb), 0.38),
+        outlined-state-layer-color: var(--mat-sys-#{$type}),
+        outlined-ripple-color: rgba(var(--mat-sys-on-#{$type}-rgb), 0.12),
+        text-label-text-color: var(--mat-sys-#{$type}),
+        text-disabled-label-text-color: rgba(var(--mat-sys-on-surface-rgb), 0.38),
+        text-state-layer-color: var(--mat-sys-#{$type}),
+        text-ripple-color: rgba(var(--mat-sys-on-#{$type}-rgb), 0.12),
+        protected-container-color: var(--mat-sys-#{$type}),
+        protected-label-text-color: var(--mat-sys-on-#{$type}),
+        protected-disabled-container-color: rgba(var(--mat-sys-on-surface-rgb), 0.12),
+        protected-disabled-label-text-color: rgba(var(--mat-sys-on-surface-rgb), 0.38),
+        protected-state-layer-color: var(--mat-sys-#{$type}),
+        protected-ripple-color: rgba(var(--mat-sys-on-#{$type}-rgb), 0.12),
+      )
+    );
+  }
+}
+
+@mixin define-color($type) {
+  .#{$type}-color {
+    color: var(--mat-sys-#{$type});
   }
 }

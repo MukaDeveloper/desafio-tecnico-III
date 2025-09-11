@@ -7,15 +7,13 @@ export class PatientTable1757383785000 implements MigrationInterface {
       CREATE TABLE IF NOT EXISTS patient (
         id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
         name VARCHAR(150) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        password VARCHAR(255) NOT NULL,
         document VARCHAR(18) NOT NULL,
-        status SMALLINT NOT NULL,
         createdat TIMESTAMPTZ NOT NULL DEFAULT now(),
         createdby VARCHAR(255) NOT NULL,
         updatedat TIMESTAMPTZ DEFAULT now(),
         updatedby VARCHAR(255) 
-      );`);
+      );
+    `);
 
     await queryRunner.query(`
       CREATE UNIQUE INDEX IF NOT EXISTS ux_patient_document ON patient (document);

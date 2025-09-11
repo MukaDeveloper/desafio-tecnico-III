@@ -5,6 +5,7 @@ import { DataSourceFactory } from '@infrastructure/database/data-source.factory'
 import { ContextAccess } from '@middleware/context/context.access';
 import { createDefaultPatient } from '../seed/create-default-patient.seed';
 import { createDefaultExam } from '../seed/create-default-exam.seed';
+import { createDefaultUserSystem } from '../seed/create-default-user-system.seed';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
@@ -14,7 +15,7 @@ async function bootstrap() {
 
   // 1) contexto inicial (org ainda desconhecida)
   const seedCtx = {
-    patient: {
+    user: {
       id: '00000000-0000-0000-0000-000000000000',
       name: 'Seeder',
       type: 'System',
@@ -26,6 +27,7 @@ async function bootstrap() {
   await ContextAccess.run(seedCtx, async () => {
     await createDefaultPatient(dataSource);
     await createDefaultExam(dataSource);
+    await createDefaultUserSystem(dataSource);
   });
 
   console.log('✅ Seeds executed successfully.');

@@ -1,4 +1,5 @@
 import { getNowWithTimeZone } from '@domain/commons/functions/get-now-with-timezone.function';
+import { PaginationQueryDto } from '@domain/commons/models/pagination-query.dto';
 import { ResponseMessageDto } from '@domain/commons/models/response-message.dto';
 import { Patient } from '@domain/entities/patient.entity';
 import { IPatientRepository } from '@domain/interfaces/ipatient-repository.interface';
@@ -23,7 +24,7 @@ export class PatientRepository implements IPatientRepository {
       message: item ? 'Patient found' : 'Patient not found',
       data: item,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -36,22 +37,24 @@ export class PatientRepository implements IPatientRepository {
       message: data?.length > 0 ? 'Patient fetched successfully' : 'Patient not found',
       data,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
       pagination: { totalItems, totalPages: 1, currentPage: 1, pageSize: totalItems },
     });
   }
 
-  async findByEmail(email: string): Promise<ResponseMessageDto<Patient | null>> {
+  async findAllPaginated(pagination: PaginationQueryDto): Promise<ResponseMessageDto<Patient[]>> {
     const qb = this.repository.createQueryBuilder('patient');
     qb.leftJoinAndSelect('patient.exams', 'exam');
-    qb.where('patient.email = :email', { email: email ?? '' });
-    const item = await qb.getOne();
+    qb.skip((pagination.page - 1) * pagination.pageSize).take(pagination.pageSize);
+    const [data, totalItems] = await qb.getManyAndCount();
+    const totalPages = Math.ceil(totalItems / pagination.pageSize);
     return new ResponseMessageDto({
-      statusCode: item ? HttpStatus.OK : HttpStatus.NOT_FOUND,
-      message: item ? 'Patient found' : 'Patient not found',
-      data: item,
+      statusCode: data?.length > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND,
+      message: data?.length > 0 ? 'Patient fetched successfully' : 'Patient not found',
+      data,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
+      pagination: { totalItems, totalPages, currentPage: pagination.page, pageSize: pagination.pageSize },
     });
   }
 
@@ -63,7 +66,7 @@ export class PatientRepository implements IPatientRepository {
       message: 'Patient created successfully',
       data: created,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -80,7 +83,7 @@ export class PatientRepository implements IPatientRepository {
       message: 'Patient updated successfully',
       data: data,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -94,7 +97,7 @@ export class PatientRepository implements IPatientRepository {
       message: 'Patient updated successfully',
       data: result,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -105,7 +108,7 @@ export class PatientRepository implements IPatientRepository {
       message: 'Customer removed successfully',
       data: true,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url
+      url: ContextAccess.url,
     });
   }
 }

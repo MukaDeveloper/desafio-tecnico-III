@@ -1,27 +1,73 @@
-<main class="container">
+<main id="container">
   <section class="wrapper">
-    <div class="wrapper-header">
-      <div class="header-title">
-        <h2>Login</h2>
-        <p>Use suas credenciais para acessar a plataforma e visualizar seus exames</p>
-      </div>
-    </div>
     <div class="wrapper-content">
-      <form [formGroup]="form" class="form-container" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>E-mail</mat-label>
-          <input matInput formControlName="email" type="text" placeholder="Digite seu e-mail" required />
-        </mat-form-field>
+      @if (!hideImage) {
+      <div class="left-content"></div>
+      }
 
-        <mat-form-field appearance="outline" floatLabel="always">
-          <mat-label>Senha</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="Insira sua senha" required />
-        </mat-form-field>
+      <div class="right-content">
+        <div class="right-content-wrapper">
+          <img src="assets/images/logo.png" alt="Logo" class="logo-image" />
+          <h2>Valide seu acesso!</h2>
+          <p>Informe suas credenciais para acessar sua conta de maneira segura.</p>
+          <br />
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="on">
+            <div class="form-content">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label> Email </mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  type="email"
+                  autocomplete="username"
+                  placeholder="seuemail@email.com"
+                />
+                @if (form.get('email')?.hasError('required')) {
+                <mat-error> - Campo obrigatório </mat-error>
+                } @if (form.get('email')?.hasError('email')) {
+                <mat-error> - E-mail inválido </mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label> Senha </mat-label>
+                <input
+                  matInput
+                  formControlName="password"
+                  [type]="hidePassword() ? 'password' : 'text'"
+                  placeholder="********"
+                  autocomplete="current-password"
+                />
+                <button
+                  type="button"
+                  mat-icon-button
+                  matSuffix
+                  (click)="clickEvent($event)"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hidePassword()"
+                >
+                  <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+                @if (form.get('password')?.hasError('required')) {
+                <mat-error> - Campo obrigatório </mat-error>
 
-        <div class="form-footer">
-          <button mat-flat-button type="submit">Entrar</button>
+                } @if (form.get('password')?.hasError('invalid')) {
+                <mat-error> - Senha inválida </mat-error>
+
+                }
+              </mat-form-field>
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="isBusy"
+                class="radius"
+              >
+                {{ isBusy ? 'Entrando...' : 'Acessar' }}
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </section>
 </main>

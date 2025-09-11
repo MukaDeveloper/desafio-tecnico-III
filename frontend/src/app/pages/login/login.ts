@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -20,10 +26,13 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Login extends BaseComponent {
   public form: FormGroup;
   public isBusy = false;
+  public hidePassword = signal(true);
+  public hideImage = false;
 
   constructor(
     private authService: AuthService,
@@ -39,6 +48,17 @@ export class Login extends BaseComponent {
 
     this.verifyAlreadyLogged();
     this.manageSubscriptions();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  private onResize() {
+    this.hideImage = window.innerWidth <= 650;
+    this.cdr.detectChanges();
+  }
+
+  public clickEvent(event: MouseEvent) {
+    this.hidePassword.set(!this.hidePassword());
+    event.stopPropagation();
   }
 
   public onSubmit() {

@@ -27,16 +27,8 @@ export class PatientProfile extends AutomapperProfile {
           mapFrom((src) => src.name),
         ),
         forMember(
-          (dest) => dest.email,
-          mapFrom((src) => src.email),
-        ),
-        forMember(
           (dest) => dest.exams,
           mapFrom((src) => mapper.mapArray(src.exams || [], Exam, ExamDto)),
-        ),
-        forMember(
-          (dest) => dest.status,
-          mapFrom((src) => src.status),
         ),
         forMember(
           (dest) => dest.createdAt,

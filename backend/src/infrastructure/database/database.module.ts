@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceFactory } from './data-source.factory';
 import { PatientInfrastructureModule } from './patient/modules/patient-infrastructure.module';
 import { AuthInfrastructureModule } from './auth/modules/auth-infrastructure.module';
+import { UserSystemInfrastructureModule } from './user-system/modules/user-system-infrastructure.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthInfrastructureModule } from './auth/modules/auth-infrastructure.mod
     }),
     AuthInfrastructureModule,
     PatientInfrastructureModule,
+    UserSystemInfrastructureModule,
   ],
   exports: [AuthInfrastructureModule, PatientInfrastructureModule],
 })

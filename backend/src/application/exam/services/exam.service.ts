@@ -5,6 +5,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ExamDto } from '../models/exam.dto';
 import { Exam } from '@domain/entities/exam.entity';
 import { IExamRepository } from '@domain/interfaces/iexam-repository.interface';
+import { PaginationQueryDto } from '@domain/commons/models/pagination-query.dto';
 
 @Injectable()
 export class ExamService {
@@ -28,6 +29,19 @@ export class ExamService {
 
   async findAll(): Promise<ResponseMessageDto<ExamDto[] | null>> {
     const result = await this.repository.findAll();
+    const resultMap = this.mapper.mapArray(result.data!, Exam, ExamDto);
+    return new ResponseMessageDto<ExamDto[] | null>({
+      statusCode: result.statusCode,
+      message: result.message,
+      data: resultMap,
+      occurrenceData: result.occurrenceData,
+      url: result.url,
+      pagination: result.pagination,
+    });
+  }
+
+  async findAllPaginated(pagination: PaginationQueryDto): Promise<ResponseMessageDto<ExamDto[] | null>> {
+    const result = await this.repository.findAllPaginated(pagination);
     const resultMap = this.mapper.mapArray(result.data!, Exam, ExamDto);
     return new ResponseMessageDto<ExamDto[] | null>({
       statusCode: result.statusCode,

@@ -1,4 +1,5 @@
 import { getNowWithTimeZone } from '@domain/commons/functions/get-now-with-timezone.function';
+import { PaginationQueryDto } from '@domain/commons/models/pagination-query.dto';
 import { ResponseMessageDto } from '@domain/commons/models/response-message.dto';
 import { Exam } from '@domain/entities/exam.entity';
 import { IExamRepository } from '@domain/interfaces/iexam-repository.interface';
@@ -23,7 +24,7 @@ export class ExamRepository implements IExamRepository {
       message: item ? 'Exam found' : 'Exam not found',
       data: item,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -33,11 +34,27 @@ export class ExamRepository implements IExamRepository {
     const [data, totalItems] = await qb.getManyAndCount();
     return new ResponseMessageDto({
       statusCode: data?.length > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND,
-      message: data?.length > 0 ? 'Exam fetched successfully' : 'Exam not found',
+      message: data?.length > 0 ? 'Exams fetched successfully' : 'Exams not found',
       data,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
       pagination: { totalItems, totalPages: 1, currentPage: 1, pageSize: totalItems },
+    });
+  }
+
+  async findAllPaginated(pagination: PaginationQueryDto): Promise<ResponseMessageDto<Exam[]>> {
+    const qb = this.repository.createQueryBuilder('exam');
+    qb.leftJoinAndSelect('exam.patient', 'patient');
+    qb.skip((pagination.page - 1) * pagination.pageSize).take(pagination.pageSize);
+    const [data, totalItems] = await qb.getManyAndCount();
+    const totalPages = Math.ceil(totalItems / pagination.pageSize);
+    return new ResponseMessageDto({
+      statusCode: data?.length > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND,
+      message: data?.length > 0 ? 'Exams fetched successfully' : 'Exams not found',
+      data,
+      occurrenceData: getNowWithTimeZone().toString(),
+      url: ContextAccess.url,
+      pagination: { totalItems, totalPages, currentPage: pagination.page, pageSize: pagination.pageSize },
     });
   }
 
@@ -51,7 +68,7 @@ export class ExamRepository implements IExamRepository {
       message: item ? 'Exam found' : 'Exam not found',
       data: item,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -63,7 +80,7 @@ export class ExamRepository implements IExamRepository {
       message: 'Exam created successfully',
       data: created,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -80,7 +97,7 @@ export class ExamRepository implements IExamRepository {
       message: 'Exam updated successfully',
       data: data,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -94,7 +111,7 @@ export class ExamRepository implements IExamRepository {
       message: 'Exam updated successfully',
       data: result,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 
@@ -105,7 +122,7 @@ export class ExamRepository implements IExamRepository {
       message: 'Customer removed successfully',
       data: true,
       occurrenceData: getNowWithTimeZone().toString(),
-      url: ContextAccess.Url,
+      url: ContextAccess.url,
     });
   }
 }

@@ -1,0 +1,125 @@
+.dashboard-cards {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+
+  .dashboard-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 260px;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--mat-sys-border);
+    background-color: var(--mat-sys-background);
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .card-label {
+        font-size: 1rem;
+        color: var(--mat-sys-outline);
+      }
+
+      .card-value {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem 1.5rem;
+  background-color: var(--mat-sys-background);
+  border: 1px solid var(--mat-sys-border);
+  border-radius: 0.75rem;
+
+  .custom-search-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--mat-sys-border);
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+    height: 40px;
+    min-width: 280px;
+    flex: 1;
+
+    .search-icon {
+      color: var(--mat-sys-outline);
+    }
+
+    input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 14px;
+      background: transparent;
+    }
+  }
+
+  .filter-button {
+    height: 40px;
+    border: 1px solid var(--mat-sys-border) !important;
+    color: var(--mat-sys-on-border) !important;
+    border-radius: 0.5rem;
+    text-transform: none;
+    font-weight: 500;
+  }
+}
+
+table {
+  background-color: var(--mat-sys-background) !important;
+}
+
+mat-paginator {
+  margin-top: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  scale: 0.85;
+}
+
+#table {
+  border: 1px solid var(--mat-sys-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+
+  th {
+    font-weight: bold;
+  }
+
+  .mat-mdc-header-cell,
+  .mat-mdc-cell {
+    border-color: var(--mat-sys-border) !important;
+  }
+
+  .mat-mdc-row {
+    height: var(--mat-table-row-item-container-height, 42px);
+  }
+
+  .selection-col {
+    width: 3%;
+    padding: 0;
+    padding-left: 0.2rem;
+  }
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

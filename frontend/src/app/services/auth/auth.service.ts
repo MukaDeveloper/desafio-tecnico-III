@@ -17,6 +17,7 @@ export class AuthService {
   constructor(private readonly httpService: HttpService) {
     this.loggedIn$.next(!!localStorage.getItem(this.tokenKey));
   }
+
   public get loginData(): IPatientLoginResponse | null {
     try {
       const storage = localStorage.getItem(this.tokenKey);
@@ -38,6 +39,7 @@ export class AuthService {
       return null;
     }
   }
+
   public logout(): void {
     localStorage.removeItem(this.tokenKey);
     this.loggedIn$.next(false);

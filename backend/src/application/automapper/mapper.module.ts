@@ -1,5 +1,6 @@
 import { ExamProfile } from '@application/exam/automapper/exam.profile';
 import { PatientProfile } from '@application/patient/automapper/patient.profile';
+import { UserSystemProfile } from '@application/user-system/automapper/user-system.profile';
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { Module } from '@nestjs/common';
@@ -10,11 +11,7 @@ import { Module } from '@nestjs/common';
       strategyInitializer: classes(),
     }),
   ],
-  providers: [
-    // Profiles
-    PatientProfile,
-    ExamProfile,
-  ],
+  providers: [PatientProfile, ExamProfile, UserSystemProfile],
   exports: [AutomapperModule],
 })
 export class MapperModule {}

@@ -8,7 +8,7 @@ export class ContextMiddleware implements NestMiddleware {
   use(req: Request, _res: Response, next: NextFunction) {
     ContextAccess.run(
       {
-        patient: {
+        user: {
           id: '00000000-0000-0000-0000-000000000000',
           name: 'UnknownPatient',
           type: 'UnknownTypePatient',

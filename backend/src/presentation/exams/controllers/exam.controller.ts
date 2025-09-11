@@ -1,8 +1,21 @@
 import { JwtAuthGuard } from '@application/auth/guards/jwt-auth.guard';
 import { ExamDto } from '@application/exam/models/exam.dto';
 import { ExamService } from '@application/exam/services/exam.service';
+import { PaginationQueryDto } from '@domain/commons/models/pagination-query.dto';
 import { ResponseMessageDto } from '@domain/commons/models/response-message.dto';
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -21,10 +34,17 @@ import {
 @ApiInternalServerErrorResponse({ description: 'Erro interno no servidor.' })
 @ApiUnauthorizedResponse({ description: 'Não autorizado.' })
 @ApiBadRequestResponse({ description: 'Erro de validação.' })
+@UseGuards(JwtAuthGuard)
 export class ExamController {
   constructor(private readonly examService: ExamService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @Get('paginated')
+  @ApiOkResponse({ description: 'Detalhes do Customer.', type: ExamDto })
+  @ApiNotFoundResponse({ description: 'Nenhum Customer encontrado.' })
+  async findAllPaginated(@Query() pagination: PaginationQueryDto): Promise<ResponseMessageDto<ExamDto[] | null>> {
+    return await this.examService.findAllPaginated(pagination);
+  }
+
   @Get(':id')
   @ApiOkResponse({ description: 'Detalhes do Customer.', type: ExamDto })
   @ApiNotFoundResponse({ description: 'Nenhum Customer encontrado.' })
@@ -32,7 +52,6 @@ export class ExamController {
     return await this.examService.findOne(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiOkResponse({ description: 'Lista de Customers.', type: [ExamDto] })
   @ApiNotFoundResponse({ description: 'Nenhum Customer encontrado.' })
@@ -40,7 +59,6 @@ export class ExamController {
     return await this.examService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiCreatedResponse({ description: 'Criado com sucesso.', type: ExamDto })
@@ -49,7 +67,6 @@ export class ExamController {
     return result.data;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   @ApiOkResponse({ description: 'Atualizado com sucesso.', type: ExamDto })
@@ -59,7 +76,6 @@ export class ExamController {
     return result.data;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse({ description: 'Removido com sucesso.' })
