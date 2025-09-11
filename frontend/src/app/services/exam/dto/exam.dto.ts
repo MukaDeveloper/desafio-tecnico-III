@@ -1,5 +1,9 @@
-export interface PatientDto {
+import { DicomModality } from '../enums/dicom-modality.enum';
+
+export interface ExamDto {
   id?: string;
-  name: string;
-  document: string;
+  patientId: string;
+  idempotencyKey: string;
+  modality: DicomModality;
+  requestedAt: Date;
 }

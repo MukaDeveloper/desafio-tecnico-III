@@ -2,11 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class AuthTokenDto {
   @ApiProperty()
-  patientId!: string;
+  userId!: string;
   @ApiProperty()
-  patientName!: string;
+  userName!: string;
   @ApiProperty()
-  patientEmail!: string;
+  userEmail!: string;
   @ApiProperty()
   accessToken!: string;
   @ApiProperty()

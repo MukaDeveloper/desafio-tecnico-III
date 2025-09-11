@@ -1,0 +1,12 @@
+.form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+
+  .form-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

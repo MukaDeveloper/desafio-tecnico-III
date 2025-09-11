@@ -55,6 +55,48 @@ export class ExamProfile extends AutomapperProfile {
           mapFrom((src) => src.updatedBy),
         ),
       );
+
+      createMap(
+        mapper,
+        ExamDto,
+        Exam,
+        forMember(
+          (dest) => dest.id,
+          mapFrom((src) => src.id),
+        ),
+        forMember(
+          (dest) => dest.modality,
+          mapFrom((src) => src.modality),
+        ),
+        forMember(
+          (dest) => dest.idempotencyKey,
+          mapFrom((src) => src.idempotencyKey),
+        ),
+        forMember(
+          (dest) => dest.patientId,
+          mapFrom((src) => src.patientId),
+        ),
+        forMember(
+          (dest) => dest.patient,
+          mapFrom((src) => mapper.map(src.patient, PatientDto, Patient)),
+        ),
+        forMember(
+          (dest) => dest.createdAt,
+          mapFrom((src) => src.createdAt),
+        ),
+        forMember(
+          (dest) => dest.createdBy,
+          mapFrom((src) => src.createdBy),
+        ),
+        forMember(
+          (dest) => dest.updatedAt,
+          mapFrom((src) => src.updatedAt),
+        ),
+        forMember(
+          (dest) => dest.updatedBy,
+          mapFrom((src) => src.updatedBy),
+        ),
+      );
     };
   }
 }

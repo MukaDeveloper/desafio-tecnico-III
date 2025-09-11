@@ -53,7 +53,45 @@ export class ExamService {
     });
   }
 
+  async findByPatientId(patientId: string): Promise<ResponseMessageDto<ExamDto | null>> {
+    const result = await this.repository.findByPatientId(patientId);
+    const resultMap = this.mapper.map(result.data!, Exam, ExamDto);
+    return new ResponseMessageDto<ExamDto | null>({
+      statusCode: result.statusCode,
+      message: result.message,
+      data: resultMap,
+      occurrenceData: result.occurrenceData,
+      url: result.url,
+      pagination: result.pagination,
+    });
+  }
+
+  async findByIdempotencyKey(idempotencyKey: string): Promise<ResponseMessageDto<ExamDto | null>> {
+    const result = await this.repository.findByIdempotencyKey(idempotencyKey);
+    const resultMap = this.mapper.map(result.data!, Exam, ExamDto);
+    return new ResponseMessageDto<ExamDto | null>({
+      statusCode: result.statusCode,
+      message: result.message,
+      data: resultMap,
+      occurrenceData: result.occurrenceData,
+      url: result.url,
+      pagination: result.pagination,
+    });
+  }
+
   async create(createDto: ExamDto): Promise<ResponseMessageDto<ExamDto | null>> {
+    const created = await this.findByIdempotencyKey(createDto.idempotencyKey);
+    if (created) {
+      return new ResponseMessageDto<ExamDto | null>({
+        statusCode: created.statusCode,
+        message: created.message,
+        data: created.data,
+        occurrenceData: created.occurrenceData,
+        url: created.url,
+        pagination: created.pagination,
+      });
+    }
+
     const entity = this.mapper.map(createDto, ExamDto, Exam);
     const result = await this.repository.create(entity);
     const resultMap = this.mapper.map(result.data!, Exam, ExamDto);

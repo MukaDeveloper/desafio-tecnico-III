@@ -71,6 +71,12 @@
                     <div class="actions">
                       <button
                         mat-icon-button
+                        (click)="$event.stopPropagation(); onNewExam(row.id)"
+                      >
+                        <mat-icon>add_box</mat-icon>
+                      </button>
+                      <button
+                        mat-icon-button
                         (click)="$event.stopPropagation(); onEditPatient(row)"
                       >
                         <mat-icon>edit</mat-icon>

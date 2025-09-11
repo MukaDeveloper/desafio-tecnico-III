@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BaseComponent } from '../../shared/utils/base.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { finalize, take } from 'rxjs';
+import { ManageExamComponent } from './manage-exam/manage-exam.component';
 
 @Component({
   selector: 'app-exams',
@@ -41,6 +43,10 @@ export class Exams extends BaseComponent implements AfterViewInit {
 
   constructor(private readonly examService: ExamService) {
     super();
+
+    this.subscriptions.push(
+      this.examService.exams$.subscribe((res) => (this.dataSource.data = res))
+    );
   }
 
   public ngAfterViewInit(): void {
@@ -58,9 +64,48 @@ export class Exams extends BaseComponent implements AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  public onNewExam() {}
-  public onEditExam(patient: Exam) {}
-  public onDeleteExam(patient: Exam) {}
+  public onReload() {
+    window.location.reload();
+  }
+
+  public onDeleteExam(exam: Exam) {
+    this.showDialog({
+      title: 'Confirmação de exclusão',
+      message: `Você tem certeza que deseja remover esse exame do paciente ${exam.patient.name}?`,
+      actions: [
+        {
+          label: 'Cancelar',
+          value: false,
+        },
+        {
+          label: 'Confirmar',
+          value: true,
+        },
+      ],
+    }).then((res) => {
+      if (res) {
+        this.isBusy = true;
+        this.examService
+          .delete(exam.id)
+          .pipe(finalize(() => (this.isBusy = false)))
+          .subscribe({
+            next: () => {
+              this.showSnackBar(
+                `Exame do paciente ${exam.patient.name} removido com sucesso`,
+                'success'
+              );
+              this.onReload();
+            },
+            error: (error) => {
+              this.showSnackBar(
+                `Ocorreu um erro durante a exclusão do exame do paciente ${exam.patient.name}: ${error.message}`,
+                'error'
+              );
+            },
+          });
+      }
+    });
+  }
 
   private loadExams(page: number = 1, pageSize: number = this.pageSize, initialLoad = false) {
     if (initialLoad) this.isLoading = true;

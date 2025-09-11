@@ -11,6 +11,6 @@ export class Patient extends AuditableEntity {
   @Column({ name: 'document', type: 'varchar', length: 32 })
   document!: string;
 
-  @OneToMany(() => Exam, (exam) => exam.patient, { cascade: true, eager: true })
+  @OneToMany(() => Exam, (exam) => exam.patient, { eager: false, nullable: true, onDelete: 'SET NULL', onUpdate: 'CASCADE' })
   exams?: Exam[] | null;
 }

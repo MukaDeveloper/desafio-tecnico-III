@@ -1,4 +1,4 @@
-export interface IPatientLoginResponse {
+export interface IUserAuthResponse {
   accessToken: string;
   expiresIn: number;
   expiresAt: string;

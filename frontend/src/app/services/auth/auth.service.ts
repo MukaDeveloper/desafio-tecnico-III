@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { IPatientLoginResponse } from './interfaces/patient-login-response.interface';
+import { IUserAuthResponse } from './interfaces/patient-login-response.interface';
 import { IEnvelopeData } from '../../shared/models/envelope-data.model';
 import { HttpService } from '../../core/api/http.service';
 import { HttpContext } from '../../shared/models/http-context.model';
@@ -18,12 +18,12 @@ export class AuthService {
     this.loggedIn$.next(!!localStorage.getItem(this.tokenKey));
   }
 
-  public get loginData(): IPatientLoginResponse | null {
+  public get loginData(): IUserAuthResponse | null {
     try {
       const storage = localStorage.getItem(this.tokenKey);
 
       if (storage) {
-        const object: IPatientLoginResponse = JSON.parse(storage);
+        const object: IUserAuthResponse = JSON.parse(storage);
 
         const expiresAt = new Date(object.expiresAt);
         if (expiresAt.getTime() < new Date().getTime() + 1000 * 60 * 10) {
@@ -45,7 +45,7 @@ export class AuthService {
     this.loggedIn$.next(false);
   }
 
-  public login(email: string, password: string): Observable<IEnvelopeData<IPatientLoginResponse>> {
+  public login(email: string, password: string): Observable<IEnvelopeData<IUserAuthResponse>> {
     const context: HttpContext = {
       method: HttpContextEnum.POST,
       url: 'auth/login',
@@ -53,7 +53,7 @@ export class AuthService {
       body: { email, password },
     };
 
-    return this.httpService.send<IEnvelopeData<IPatientLoginResponse>>(context).pipe(
+    return this.httpService.send<IEnvelopeData<IUserAuthResponse>>(context).pipe(
       tap((res) => {
         if (res.statusCode === 200 && res.data) {
           const data = res.data;

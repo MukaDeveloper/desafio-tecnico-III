@@ -6,6 +6,7 @@ import { IEnvelopeArrayData, IEnvelopeData } from '../../shared/models/envelope-
 import { HttpService } from '../../core/api/http.service';
 import { PaginationQuery } from '../../shared/models/pagination-query.model';
 import { Exam } from './interfaces/exam.interface';
+import { ExamDto } from './dto/exam.dto';
 
 @Injectable({ providedIn: 'root' })
 export class ExamService {
@@ -17,13 +18,47 @@ export class ExamService {
     const context: HttpContext = {
       method: HttpContextEnum.GET,
       url: 'exames',
-      queryParams: pagination,
+      params: pagination,
       headers: { 'Content-Type': 'application/json' },
     };
 
     return this.httpService.send<IEnvelopeArrayData<Exam>>(context).pipe(
       tap((res) => {
         this.exams$.next(res.data);
+      }),
+      map((res) => res)
+    );
+  }
+
+  public create(dto: ExamDto): Observable<Exam> {
+    const context: HttpContext = {
+      method: HttpContextEnum.POST,
+      url: 'exames',
+      headers: { 'Content-Type': 'application/json' },
+      body: dto,
+    };
+
+    return this.httpService.send<Exam>(context).pipe(
+      tap((res) => {
+      const current = this.exams$.value;
+      this.exams$.next([res, ...current]);
+      }),
+      map((res) => res)
+    );
+  }
+
+  public delete(examId: string): Observable<boolean> {
+    const context: HttpContext = {
+      method: HttpContextEnum.DELETE,
+      url: `exames/${examId}`,
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    return this.httpService.send<boolean>(context).pipe(
+      tap((res) => {
+        const current = this.exams$.value;
+        const updated = current.filter(e => e.id != examId);
+        this.exams$.next(updated)
       }),
       map((res) => res)
     );

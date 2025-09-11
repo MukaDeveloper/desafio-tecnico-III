@@ -7,6 +7,7 @@ export interface IExamRepository {
   findAll(): Promise<ResponseMessageDto<Exam[] | null>>;
   findAllPaginated(pagination: PaginationQueryDto): Promise<ResponseMessageDto<Exam[]>>;
   findByPatientId(patientId: string): Promise<ResponseMessageDto<Exam | null>>;
+  findByIdempotencyKey(idempotencyKey: string): Promise<ResponseMessageDto<Exam | null>>;
   create(entity: Exam): Promise<ResponseMessageDto<Exam | null>>;
   update(examId: string, entity: Exam): Promise<ResponseMessageDto<Exam | null>>;
   save(entity: Exam): Promise<ResponseMessageDto<Exam | null>>;

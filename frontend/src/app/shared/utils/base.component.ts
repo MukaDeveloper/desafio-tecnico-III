@@ -98,35 +98,6 @@ export class BaseComponent implements OnDestroy {
     });
   }
 
-  public validateCNPJ(cnpj: string): boolean {
-    if (cnpj.length !== 14) return false;
-
-    const digits = cnpj.split('').map((n) => parseInt(n, 10));
-
-    let sum = 0;
-    const weights1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-    for (let i = 0; i < 12; i++) {
-      sum += digits[i] * weights1[i];
-    }
-    let remainder = sum % 11;
-    const firstCheckDigit = remainder < 2 ? 0 : 11 - remainder;
-
-    if (digits[12] !== firstCheckDigit) return false;
-
-    sum = 0;
-    const weights2 = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
-
-    for (let i = 0; i < 13; i++) {
-      sum += digits[i] * weights2[i];
-    }
-    remainder = sum % 11;
-    const secondCheckDigit = remainder < 2 ? 0 : 11 - remainder;
-
-    if (digits[13] !== secondCheckDigit) return false;
-
-    return true;
-  }
-
   public validateCPF(cpf: string): boolean {
     if (cpf.length !== 11) return false;
 

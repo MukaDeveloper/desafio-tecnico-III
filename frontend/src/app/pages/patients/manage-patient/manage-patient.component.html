@@ -1,0 +1,75 @@
+<main id="container">
+  <section class="wrapper">
+    <div class="wrapper-container">
+      <div class="wrapper-container-header">
+        <div class="d-flex align-items-center gap-1">
+          <button mat-icon-button (click)="onCloseDialog()"><mat-icon> close </mat-icon></button>
+          <h2>{{ patient ? 'Editar' : 'Novo' }} paciente</h2>
+        </div>
+      </div>
+      <div class="wrapper-container-content">
+        @if (isLoading) {
+        <div class="loading-container">
+          <mat-spinner></mat-spinner>
+        </div>
+        } @else {
+        <form [formGroup]="form" class="form-content" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label> Nome </mat-label>
+            <input
+              matInput
+              formControlName="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Digite o nome aqui"
+            />
+            @if (form.get('name')?.hasError('required')) {
+            <mat-error> - Campo obrigatório </mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label> Documento </mat-label>
+            <input
+              matInput
+              formControlName="document"
+              type="text"
+              placeholder="000.000.000-00"
+              mask="000.000.000-00"
+              autocomplete="cpf"
+            />
+            @if (form.get('document')?.hasError('required')) {
+            <mat-error> - Campo obrigatório </mat-error>
+            } @if (form.get('document')?.hasError('invalid')) {
+            <mat-error> - Documento inválido </mat-error>
+            }
+          </mat-form-field>
+
+          <div class="form-footer">
+            <button
+              mat-button
+              color="primary"
+              type="button"
+              [disabled]="isBusy"
+              class="radius"
+              (click)="onCloseDialog()"
+            >
+              Cancelar
+            </button>
+
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="isBusy"
+              class="radius"
+            >
+              {{ isBusy ? 'Salvando...' : 'Salvar' }}
+            </button>
+          </div>
+        </form>
+        }
+      </div>
+    </div>
+  </section>
+</main>

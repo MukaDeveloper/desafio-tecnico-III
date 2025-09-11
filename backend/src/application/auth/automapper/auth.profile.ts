@@ -22,15 +22,15 @@ export class AuthProfile extends AutomapperProfile {
         UserSystem,
         AuthTokenDto,
         forMember(
-          (dest) => dest.patientId,
+          (dest) => dest.userId,
           mapFrom((src) => src.id),
         ),
         forMember(
-          (dest) => dest.patientName,
+          (dest) => dest.userName,
           mapFrom((src) => src.name),
         ),
         forMember(
-          (dest) => dest.patientEmail,
+          (dest) => dest.userEmail,
           mapFrom((src) => src.email),
         ),
         forMember(

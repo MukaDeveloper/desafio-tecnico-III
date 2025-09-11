@@ -15,11 +15,11 @@ export class AuditSubscriber implements EntitySubscriberInterface {
     if (!entity) return;
     const patient = ContextAccess.userName;
 
-    entity.Id = entity.Id || uuid();
-    entity.CreatedAt = entity.CreatedAt || getNowWithTimeZone();
-    entity.CreatedBy = entity.CreatedBy || patient;
-    entity.UpdatedAt = getNowWithTimeZone();
-    entity.UpdatedBy = patient;
+    entity.id = entity.id || uuid();
+    entity.createdAt = entity.createdAt || getNowWithTimeZone();
+    entity.createdBy = entity.createdBy || patient;
+    entity.updatedAt = getNowWithTimeZone();
+    entity.updatedBy = patient;
   }
 
   beforeUpdate(event: UpdateEvent<any>) {
@@ -27,10 +27,10 @@ export class AuditSubscriber implements EntitySubscriberInterface {
     if (!entity) return;
     const patient = ContextAccess.userName;
 
-    entity.Id = entity.Id || uuid();
-    entity.CreatedAt = entity.CreatedAt || getNowWithTimeZone();
-    entity.CreatedBy = entity.CreatedBy || patient;
-    entity.UpdatedAt = getNowWithTimeZone();
-    entity.UpdatedBy = patient;
+    entity.id = entity.id || uuid();
+    entity.createdAt = entity.createdAt || getNowWithTimeZone();
+    entity.createdBy = entity.createdBy || patient;
+    entity.updatedAt = getNowWithTimeZone();
+    entity.updatedBy = patient;
   }
 }

@@ -5,7 +5,6 @@ import { IErrorModel } from '../models/error.model';
 export class HttpErrorHandler {
   static handle(error: HttpErrorResponse | any) {
     const parsedError = HttpErrorHandler.parse(error);
-    // Aqui voce pode logar, enviar para Sentry, etc.
     return throwError(() => parsedError);
   }
 

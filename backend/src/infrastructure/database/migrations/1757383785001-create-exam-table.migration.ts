@@ -25,7 +25,7 @@ export class ExamTable1757383785001 implements MigrationInterface {
         createdby VARCHAR(255) NOT NULL,
         updatedat TIMESTAMPTZ DEFAULT now(),
         updatedby VARCHAR(255),
-        CONSTRAINT fk_exam_patient_patientid FOREIGN KEY (patientid) REFERENCES patient(id) ON DELETE RESTRICT
+        CONSTRAINT fk_exam_patient_patientid FOREIGN KEY (patientid) REFERENCES patient(id) ON DELETE CASCADE ON UPDATE CASCADE
       );
     `);
 

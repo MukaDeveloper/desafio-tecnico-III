@@ -32,50 +32,35 @@ export class HttpService {
   }
 
   private get<T>(context: HttpContext): Observable<T> {
-    const queryParams = context.queryParams
-      ? '?' + new URLSearchParams(context.queryParams).toString()
-      : '';
-    return this.http.get<T>(`${this.baseUrl}/${context.url}${queryParams}`, {
+    return this.http.get<T>(`${this.baseUrl}/${context.url}`, {
       headers: context.headers || {},
       params: context.params || {},
     });
   }
 
   private post<T>(context: HttpContext): Observable<T> {
-    const queryParams = context.queryParams
-      ? '?' + new URLSearchParams(context.queryParams).toString()
-      : '';
-    return this.http.post<T>(`${this.baseUrl}/${context.url}${queryParams}`, context.body ?? {}, {
+    return this.http.post<T>(`${this.baseUrl}/${context.url}`, context.body ?? {}, {
       headers: context.headers || {},
       params: context.params || {},
     });
   }
 
   private patch<T>(context: HttpContext): Observable<T> {
-    const queryParams = context.queryParams
-      ? '?' + new URLSearchParams(context.queryParams).toString()
-      : '';
-    return this.http.patch<T>(`${this.baseUrl}/${context.url}${queryParams}`, context.body ?? {}, {
+    return this.http.patch<T>(`${this.baseUrl}/${context.url}`, context.body ?? {}, {
       headers: context.headers || {},
       params: context.params || {},
     });
   }
 
   private put<T>(context: HttpContext): Observable<T> {
-    const queryParams = context.queryParams
-      ? '?' + new URLSearchParams(context.queryParams).toString()
-      : '';
-    return this.http.put<T>(`${this.baseUrl}/${context.url}${queryParams}`, context.body ?? {}, {
+    return this.http.put<T>(`${this.baseUrl}/${context.url}`, context.body ?? {}, {
       headers: context.headers || {},
       params: context.params || {},
     });
   }
 
   private delete<T>(context: HttpContext): Observable<T> {
-    const queryParams = context.queryParams
-      ? '?' + new URLSearchParams(context.queryParams).toString()
-      : '';
-    return this.http.delete<T>(`${this.baseUrl}/${context.url}${queryParams}`, {
+    return this.http.delete<T>(`${this.baseUrl}/${context.url}`, {
       headers: context.headers || {},
       params: context.params || {},
     });

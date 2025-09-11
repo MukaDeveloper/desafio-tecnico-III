@@ -6,12 +6,6 @@
           <h1>Exames</h1>
           <p>Registre e visualize exames de pacientes</p>
         </div>
-        <div class="header-actions">
-          <button (click)="onNewExam()" mat-flat-button class="radius" [disabled]="isLoading">
-            <mat-icon>add</mat-icon>
-            Novo Exame
-          </button>
-        </div>
       </div>
 
       <div class="dashboard-cards">
@@ -37,7 +31,7 @@
             <div class="card-container">
               @if (!dataSource.data.length) {
               <div class="error-label text-align-center">
-                <h5>Não há pacientes registrados</h5>
+                <h5>Não há exames de pacientes registrados</h5>
               </div>
               } @else {
               <div class="search-container">
@@ -69,12 +63,6 @@
                   <th mat-header-cell *matHeaderCellDef></th>
                   <td mat-cell *matCellDef="let row">
                     <div class="actions">
-                      <button
-                        mat-icon-button
-                        (click)="$event.stopPropagation(); onEditExam(row)"
-                      >
-                        <mat-icon>edit</mat-icon>
-                      </button>
                       <button
                         mat-icon-button
                         (click)="$event.stopPropagation(); onDeleteExam(row)"

@@ -9,7 +9,7 @@ export class Exam extends AuditableEntity {
   @Column({ name: 'patientid', type: 'uuid' })
   patientId!: string;
 
-  @ManyToOne(() => Patient, { onDelete: 'RESTRICT' })
+  @ManyToOne(() => Patient, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'patientid', referencedColumnName: 'id' })
   patient!: Patient;
 

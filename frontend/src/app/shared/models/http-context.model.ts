@@ -5,6 +5,5 @@ export interface HttpContext {
   url: string;
   headers?: Record<string, any>;
   params?: Record<string, any>;
-  queryParams?: Record<string, any>;
   body?: any;
 }

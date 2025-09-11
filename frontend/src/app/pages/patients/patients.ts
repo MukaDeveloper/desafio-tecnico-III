@@ -10,6 +10,9 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { IEnvelopeArrayData } from '../../shared/models/envelope-data.model';
+import { ManagePatientComponent } from './manage-patient/manage-patient.component';
+import { finalize, take } from 'rxjs';
+import { ManageExamComponent } from '../exams/manage-exam/manage-exam.component';
 
 @Component({
   selector: 'app-patients',
@@ -41,6 +44,10 @@ export class Patients extends BaseComponent implements AfterViewInit {
 
   constructor(private readonly patientService: PatientService) {
     super();
+
+    this.subscriptions.push(
+      this.patientService.patients$.subscribe((res) => (this.dataSource.data = res))
+    );
   }
 
   public ngAfterViewInit(): void {
@@ -58,9 +65,102 @@ export class Patients extends BaseComponent implements AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  public onNewPatient() {}
-  public onEditPatient(patient: Patient) {}
-  public onDeletePatient(patient: Patient) {}
+  public onReload() {
+    window.location.reload();
+  }
+
+  public onNewPatient() {
+    const dialog = this.openDialog(ManagePatientComponent, {
+      disableClose: true,
+      data: {},
+      panelClass: 'custom-dialog',
+    });
+
+    this.subscriptions.push(
+      dialog
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe((res) => {
+          if (res) {
+            this.onReload();
+          }
+        })
+    );
+  }
+
+  public onNewExam(patientId: string) {
+    const dialog = this.openDialog(ManageExamComponent, {
+      disableClose: true,
+      panelClass: 'custom-dialog',
+      data: { patientId }
+    });
+
+    this.subscriptions.push(
+      dialog
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe((res) => {
+          if (res) {
+            this.onReload();
+          }
+        })
+    );
+  }
+
+  public onEditPatient(patient: Patient) {
+    const dialog = this.openDialog(ManagePatientComponent, {
+      disableClose: true,
+      data: { patient },
+      panelClass: 'custom-dialog',
+    });
+
+    this.subscriptions.push(
+      dialog
+        .afterClosed()
+        .pipe(take(1))
+        .subscribe((res) => {
+          if (res) {
+            this.onReload();
+          }
+        })
+    );
+  }
+
+  public onDeletePatient(patient: Patient) {
+    this.showDialog({
+      title: 'Confirmação de exclusão',
+      message: `Você tem certeza que deseja remover o paciente ${patient.name}?`,
+      actions: [
+        {
+          label: 'Cancelar',
+          value: false,
+        },
+        {
+          label: 'Confirmar',
+          value: true,
+        },
+      ],
+    }).then((res) => {
+      if (res) {
+        this.isBusy = true;
+        this.patientService
+          .delete(patient.id)
+          .pipe(finalize(() => (this.isBusy = false)))
+          .subscribe({
+            next: () => {
+              this.showSnackBar(`Paciente ${patient.name} removido com sucesso`, 'success');
+              this.onReload();
+            },
+            error: (error) => {
+              this.showSnackBar(
+                `Ocorreu um erro durante a exclusão do paciente ${patient.name}: ${error.message}`,
+                'error'
+              );
+            },
+          });
+      }
+    });
+  }
 
   private loadPatients(page: number = 1, pageSize: number = this.pageSize, initialLoad = false) {
     if (initialLoad) this.isLoading = true;

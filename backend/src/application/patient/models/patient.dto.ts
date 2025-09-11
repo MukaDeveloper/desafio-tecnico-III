@@ -14,6 +14,11 @@ export class PatientDto {
   @IsNotEmpty()
   name!: string;
 
+  @ApiProperty({ description: 'Documento', required: true })
+  @IsString()
+  @IsNotEmpty()
+  document!: string;
+
   @ApiProperty({ description: 'Data de Criação', required: false })
   @Type(() => Date)
   @IsDate()

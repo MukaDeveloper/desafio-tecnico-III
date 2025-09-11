@@ -61,7 +61,21 @@ export class ExamRepository implements IExamRepository {
   async findByPatientId(patientId: string): Promise<ResponseMessageDto<Exam | null>> {
     const qb = this.repository.createQueryBuilder('exam');
     qb.leftJoinAndSelect('exam.patient', 'patient');
-    qb.where('exam.patientId = :patientId', { id: patientId ?? this.fallbackId });
+    qb.where('exam.patientId = :patientId', { patientId: patientId ?? this.fallbackId });
+    const item = await qb.getOne();
+    return new ResponseMessageDto({
+      statusCode: item ? HttpStatus.OK : HttpStatus.NOT_FOUND,
+      message: item ? 'Exam found' : 'Exam not found',
+      data: item,
+      occurrenceData: getNowWithTimeZone().toString(),
+      url: ContextAccess.url,
+    });
+  }
+
+  async findByIdempotencyKey(idempotencyKey: string): Promise<ResponseMessageDto<Exam | null>> {
+    const qb = this.repository.createQueryBuilder('exam');
+    qb.leftJoinAndSelect('exam.patient', 'patient');
+    qb.where('exam.idempotencyKey = :idempotencyKey', { idempotencyKey: idempotencyKey ?? this.fallbackId });
     const item = await qb.getOne();
     return new ResponseMessageDto({
       statusCode: item ? HttpStatus.OK : HttpStatus.NOT_FOUND,

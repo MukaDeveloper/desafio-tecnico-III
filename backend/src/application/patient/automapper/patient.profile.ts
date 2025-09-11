@@ -27,8 +27,50 @@ export class PatientProfile extends AutomapperProfile {
           mapFrom((src) => src.name),
         ),
         forMember(
+          (dest) => dest.document,
+          mapFrom((src) => src.document),
+        ),
+        forMember(
           (dest) => dest.exams,
           mapFrom((src) => mapper.mapArray(src.exams || [], Exam, ExamDto)),
+        ),
+        forMember(
+          (dest) => dest.createdAt,
+          mapFrom((src) => src.createdAt),
+        ),
+        forMember(
+          (dest) => dest.createdBy,
+          mapFrom((src) => src.createdBy),
+        ),
+        forMember(
+          (dest) => dest.updatedAt,
+          mapFrom((src) => src.updatedAt),
+        ),
+        forMember(
+          (dest) => dest.updatedBy,
+          mapFrom((src) => src.updatedBy),
+        ),
+      );
+
+      createMap(
+        mapper,
+        PatientDto,
+        Patient,
+        forMember(
+          (dest) => dest.id,
+          mapFrom((src) => src.id),
+        ),
+        forMember(
+          (dest) => dest.name,
+          mapFrom((src) => src.name),
+        ),
+        forMember(
+          (dest) => dest.document,
+          mapFrom((src) => src.document),
+        ),
+        forMember(
+          (dest) => dest.exams,
+          mapFrom((src) => mapper.mapArray(src.exams || [], ExamDto, Exam)),
         ),
         forMember(
           (dest) => dest.createdAt,
